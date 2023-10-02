@@ -2,7 +2,11 @@ package com.example.myapplication.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import com.example.myapplication.R
+import com.example.myapplication.activities.fragments.Home
+import com.example.myapplication.activities.fragments.NewPost
+import com.example.myapplication.activities.fragments.Profile
 import com.example.myapplication.databinding.ActivityHomeBinding
 import com.example.myapplication.databinding.ActivityLoginBinding
 import com.example.myapplication.model.UserModel
@@ -20,14 +24,38 @@ class HomeActivity : AppCompatActivity() {
 
         SessionManager.init(this)
 
-        val user = SessionManager.getUser()
-        //ver usuario logado
-        if (user != null) {
-            val userName = user.payload.username
+        replaceFragment(Home())
 
-            val userNameTextView = binding.usernametv
+        binding.bottomNavigationView.setOnItemSelectedListener {
 
-            userNameTextView.text = "Olá, $userName"
+            when(it.itemId){
+
+                R.id.home -> replaceFragment(Home())
+                R.id.profile -> replaceFragment(Profile())
+                R.id.newpost -> replaceFragment(NewPost())
+
+                else ->{
+
+
+
+                }
+
+            }
+
+            true
+
         }
+
+
+    }
+
+    private fun replaceFragment(fragment : Fragment){
+
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.frame_layout,fragment)
+        fragmentTransaction.commit()
+
+
     }
 }
