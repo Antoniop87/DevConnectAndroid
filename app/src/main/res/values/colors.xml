@@ -5,4 +5,6 @@
     <color name="cor_inicial">#4E57D3</color>
     <color name="cor_final">#C1A4FF</color>
     <color name="background_color">#121620</color>
+    <color name="colorText">#D4D4D4</color>
+    <color name="colorTextSecundary">#BABABA</color>
 </resources>

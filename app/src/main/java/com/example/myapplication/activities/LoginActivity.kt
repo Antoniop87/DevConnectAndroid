@@ -50,6 +50,7 @@ class LoginActivity : AppCompatActivity() {
                     SessionManager.saveUser(response)
 
                     Log.d("SessionManager", "JSON do usuário recuperado: $response")
+
                     val i = Intent(this@LoginActivity, HomeActivity::class.java)
                     startActivity(i)
                     finish()

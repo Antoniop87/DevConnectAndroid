@@ -2,6 +2,8 @@ package com.example.myapplication.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import com.example.myapplication.R
 import com.example.myapplication.activities.fragments.Home
@@ -10,6 +12,7 @@ import com.example.myapplication.activities.fragments.Profile
 import com.example.myapplication.databinding.ActivityHomeBinding
 import com.example.myapplication.databinding.ActivityLoginBinding
 import com.example.myapplication.model.UserModel
+import com.example.myapplication.service.ApiClient
 import com.example.myapplication.service.SessionManager
 
 class HomeActivity : AppCompatActivity() {
@@ -35,8 +38,6 @@ class HomeActivity : AppCompatActivity() {
                 R.id.newpost -> replaceFragment(NewPost())
 
                 else ->{
-
-
 
                 }
 

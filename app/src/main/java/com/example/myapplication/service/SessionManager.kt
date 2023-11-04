@@ -11,6 +11,7 @@ import com.google.gson.Gson
 object SessionManager {
     private const val PREF_NAME = "MyAppPrefs"
     private const val KEY_USER = "user"
+    private const val KEY_TOKEN = "access_token"
 
     private lateinit var sharedPreferences: SharedPreferences
 

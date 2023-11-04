@@ -19,7 +19,7 @@
         android:background="@drawable/bg_edit"
         android:padding="14dp"
         android:ems="10"
-        android:hint="email"
+        android:hint="username"
         android:inputType="textEmailAddress"
         />
 
