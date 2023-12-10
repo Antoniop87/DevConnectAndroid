@@ -3,6 +3,7 @@ package com.example.myapplication.service
 import com.example.myapplication.model.LoginRequest
 import com.example.myapplication.model.Payload
 import com.example.myapplication.model.Post
+import com.example.myapplication.model.RegisterRequest
 import com.example.myapplication.model.UserModel
 import retrofit2.Call
 import retrofit2.Response
@@ -12,10 +13,10 @@ import retrofit2.http.POST
 
 interface AuthService {
 
-    @POST("api/auth/login")
+    @POST("auth/login")
     suspend fun login(@Body credentials: LoginRequest): Payload
 
-    @POST("api/auth/register")
-    suspend fun register(@Body userData: UserModel): UserModel
+    @POST("auth/register")
+    suspend fun register(@Body userData: RegisterRequest): RegisterRequest
 
 }

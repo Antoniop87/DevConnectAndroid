@@ -31,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
         SessionManager.init(this)
 
         binding.btnLogin.setOnClickListener {
-            val username = binding.etEmail.text.toString()
+            val username = binding.etUsername.text.toString()
             val password = binding.etPassword.text.toString()
 
             if (username.isNotEmpty() && password.isNotEmpty()) {
@@ -39,6 +39,10 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this@LoginActivity, "Preencha os campos", Toast.LENGTH_SHORT).show()
             }
+        }
+        binding.btnRegister.setOnClickListener {
+            val i = Intent(this, RegisterActivity::class.java)
+            startActivity(i)
         }
     }
 
@@ -49,7 +53,9 @@ class LoginActivity : AppCompatActivity() {
         launch(Dispatchers.IO) {
             try {
                 val response = call
-                if (response.isSuccessful) {
+
+
+                if (response != null) {
                     SessionManager.saveUser(response)
 
                     Log.d("SessionManager", "JSON do usuário recuperado: $response")
@@ -69,7 +75,5 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-
 }
-
 
