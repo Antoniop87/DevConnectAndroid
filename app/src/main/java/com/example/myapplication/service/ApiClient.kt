@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
 
-    private const val BASE_URL = "https://98c5-45-164-246-227.ngrok.io"
+    private const val BASE_URL = "https://api.gustavojms.dev/"
 
     val token = SessionManager.getUser()
     val tokenRecuperado = token?.accessToken

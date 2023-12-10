@@ -16,6 +16,7 @@ import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class LoginActivity : AppCompatActivity() {
 
@@ -42,11 +43,13 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-    private fun loginUser(username: String, password: String) {
-        GlobalScope.launch(Dispatchers.IO) {
+    fun loginUser(username: String, password: String) = runBlocking{
+        val call = ApiClient.authService.login(LoginRequest(username, password))
+
+        launch(Dispatchers.IO) {
             try {
-                val response = ApiClient.authService.login(LoginRequest(username, password))
-                if (response != null) {
+                val response = call
+                if (response.isSuccessful) {
                     SessionManager.saveUser(response)
 
                     Log.d("SessionManager", "JSON do usuário recuperado: $response")
@@ -63,6 +66,7 @@ class LoginActivity : AppCompatActivity() {
 
             }
         }
+
     }
 
 

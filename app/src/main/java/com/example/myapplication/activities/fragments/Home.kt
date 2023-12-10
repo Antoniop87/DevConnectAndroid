@@ -34,9 +34,12 @@ class Home : Fragment() {
 
         recyclerView.adapter = postAdapter
 
-        chamaPosts()
-
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        chamaPosts()
     }
 
     fun chamaPosts() = runBlocking {
