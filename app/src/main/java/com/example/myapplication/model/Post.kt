@@ -10,5 +10,7 @@ data class Post(
     @SerializedName( "userId" )
     val userId: Int,
     @SerializedName( "likesCount" )
-    val likesCount: Int
+    val likesCount: Int,
+    @SerializedName( "User" )
+    val user: UserModel,
 )

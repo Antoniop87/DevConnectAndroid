@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.example.myapplication.R
 import com.example.myapplication.model.PostRequest
 import com.example.myapplication.service.ApiClient
+import com.example.myapplication.service.SessionManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -40,17 +41,21 @@ class NewPost : Fragment() {
         initView(view)
 
         btnNewPost.setOnClickListener {
-            criarPost(etNewPost.text.toString())
-            val fragmentManager = requireActivity().supportFragmentManager
-            val fragmentTransaction = fragmentManager.beginTransaction()
+            if(etNewPost.text.isNotEmpty()){
+                criarPost(etNewPost.text.toString())
+                val fragmentManager = requireActivity().supportFragmentManager
+                val fragmentTransaction = fragmentManager.beginTransaction()
 
-            val home = Home()
-            fragmentTransaction.replace(R.id.frame_layout, home)
+                val home = Home()
+                fragmentTransaction.replace(R.id.frame_layout, home)
 
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
+                fragmentTransaction.addToBackStack(null)
+                fragmentTransaction.commit()
+            } else {
+                Toast.makeText(activity, "Digite algo no seu post!", Toast.LENGTH_SHORT).show()
+            }
+
         }
-
 
         return view;
     }
@@ -62,19 +67,22 @@ class NewPost : Fragment() {
 
 
     private fun criarPost(content: String) = runBlocking{
-        val call = ApiClient.postServcies.criaPost(PostRequest(content, 1))
-        GlobalScope.launch(Dispatchers.IO) {
-            try {
-                val response = call
+        SessionManager.init(requireContext())
+        val user = SessionManager.getUser()
+        if(user != null){
+            val userId = user.payload.sub
 
-                if (response != null){
-                    Toast.makeText(activity, "Post criado", Toast.LENGTH_SHORT).show()
+            launch(Dispatchers.IO) {
+                try {
+                    val call = ApiClient.postServcies.criaPost(PostRequest(content, userId))
+                    val response = call
 
+                    if (response != null){
+                        Toast.makeText(activity, "Post criado", Toast.LENGTH_SHORT).show()
+                    }
 
+                    } catch (e: Exception){
                 }
-
-            } catch (e: Exception){
-
             }
         }
     }

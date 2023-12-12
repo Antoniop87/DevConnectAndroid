@@ -29,7 +29,7 @@ class PostAdapter (private val context: Context, private var postList: List<Post
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val post = postList[position]
 
-        holder.tvUsuarioPost.text = post.userId.toString()
+        holder.tvUsuarioPost.text = post.user.username
         holder.tvPostPost.text = post.content
     }
 

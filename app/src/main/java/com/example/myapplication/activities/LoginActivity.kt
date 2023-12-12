@@ -5,18 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import com.example.myapplication.R
 import com.example.myapplication.model.LoginRequest
 import com.example.myapplication.databinding.ActivityLoginBinding
-import com.example.myapplication.model.Payload
-import com.example.myapplication.model.UserModel
 import com.example.myapplication.service.ApiClient
 import com.example.myapplication.service.SessionManager
-import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+
 
 class LoginActivity : AppCompatActivity() {
 
@@ -37,13 +33,15 @@ class LoginActivity : AppCompatActivity() {
             if (username.isNotEmpty() && password.isNotEmpty()) {
                 loginUser(username, password)
             } else {
-                Toast.makeText(this@LoginActivity, "Preencha os campos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
             }
         }
+
         binding.btnRegister.setOnClickListener {
             val i = Intent(this, RegisterActivity::class.java)
             startActivity(i)
         }
+
     }
 
 
@@ -57,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
 
                 if (response != null) {
                     SessionManager.saveUser(response)
-
+                    SessionManager.setLoggedIn(true)
                     Log.d("SessionManager", "JSON do usuário recuperado: $response")
 
                     val i = Intent(this@LoginActivity, HomeActivity::class.java)
@@ -69,10 +67,8 @@ class LoginActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 e.printStackTrace()
                 Toast.makeText(this@LoginActivity, "Erro de rede", Toast.LENGTH_SHORT).show()
-
             }
         }
-
     }
 
 }

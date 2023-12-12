@@ -12,11 +12,13 @@ object SessionManager {
     private const val PREF_NAME = "MyAppPrefs"
     private const val KEY_USER = "user"
     private const val KEY_TOKEN = "access_token"
-
+    private const val KEY_IS_LOGGED_IN = "isLoggedIn"
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var editor: SharedPreferences.Editor
 
     fun init(context: Context) {
         sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        editor = sharedPreferences.edit()
     }
 
     fun saveUser(user: Payload) {
@@ -34,4 +36,14 @@ object SessionManager {
     fun clearSession() {
         sharedPreferences.edit().clear().apply()
     }
+
+    fun isLoggedIn(): Boolean {
+        return sharedPreferences.getBoolean(KEY_IS_LOGGED_IN, false)
+    }
+
+    fun setLoggedIn(isLoggedIn: Boolean) {
+        editor.putBoolean(KEY_IS_LOGGED_IN, isLoggedIn)
+        editor.apply()
+    }
+
 }
